@@ -1,0 +1,7 @@
+<resources>
+    <color name="primary">#8B4A3A</color>
+    <color name="primary_dark">#6E3A2D</color>
+    <color name="on_primary">#FFFFFF</color>
+    <color name="background">#FDF1EC</color>
+    <color name="warning">#C62828</color>
+</resources>

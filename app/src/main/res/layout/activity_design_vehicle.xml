@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/background">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/primary"
+        android:title="Design New Vehicle"
+        app:titleTextColor="@color/on_primary" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <EditText
+                android:id="@+id/editVehicleName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Vehicle Name"
+                android:inputType="text"
+                android:autofillHints="" />
+
+            <TextView style="@style/SectionHeader" android:text="Body" />
+
+            <TextView style="@style/FieldLabel" android:layout_marginTop="0dp" android:text="Body Type" />
+            <Spinner android:id="@+id/spinnerBodyType" android:layout_width="match_parent" android:layout_height="wrap_content" />
+
+            <TextView style="@style/FieldLabel" android:text="Chassis" />
+            <Spinner android:id="@+id/spinnerChassis" android:layout_width="match_parent" android:layout_height="wrap_content" />
+
+            <TextView style="@style/FieldLabel" android:text="Suspension" />
+            <Spinner android:id="@+id/spinnerSuspension" android:layout_width="match_parent" android:layout_height="wrap_content" />
+
+            <TextView style="@style/SectionHeader" android:text="Power Plant" />
+
+            <RadioGroup
+                android:id="@+id/radioGroupPowerPlantType"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/radioElectric"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Electric"
+                    android:checked="true" />
+
+                <RadioButton
+                    android:id="@+id/radioGas"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp"
+                    android:text="Gas" />
+            </RadioGroup>
+
+            <Spinner android:id="@+id/spinnerElectricPlant" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="8dp" />
+
+            <LinearLayout
+                android:id="@+id/layoutGasFields"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <Spinner android:id="@+id/spinnerGasEngine" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="8dp" />
+                <Spinner android:id="@+id/spinnerGasTankType" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="8dp" />
+
+                <EditText
+                    android:id="@+id/editGasGallons"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:hint="Gas Tank Size (gallons)"
+                    android:inputType="numberDecimal"
+                    android:text="10"
+                    android:autofillHints="" />
+            </LinearLayout>
+
+            <TextView style="@style/SectionHeader" android:text="Tires" />
+            <Spinner android:id="@+id/spinnerTireType" android:layout_width="match_parent" android:layout_height="wrap_content" />
+
+            <TextView style="@style/SectionHeader" android:text="Armor (points per facing)" />
+
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal">
+                <LinearLayout style="@style/ArmorFacingBlock">
+                    <TextView style="@style/ArmorFacingLabel" android:text="Front" />
+                    <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content" android:orientation="horizontal" android:gravity="center_vertical" android:layout_marginTop="4dp">
+                        <com.google.android.material.button.MaterialButton android:id="@+id/buttonArmorFrontMinus" style="@style/ArmorStepperButton" android:text="−" />
+                        <EditText android:id="@+id/editArmorFront" style="@style/ArmorStepperField" android:text="0" />
+                        <com.google.android.material.button.MaterialButton android:id="@+id/buttonArmorFrontPlus" style="@style/ArmorStepperButton" android:text="+" />
+                    </LinearLayout>
+                </LinearLayout>
+                <LinearLayout style="@style/ArmorFacingBlock" android:layout_marginStart="16dp">
+                    <TextView style="@style/ArmorFacingLabel" android:text="Back" />
+                    <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content" android:orientation="horizontal" android:gravity="center_vertical" android:layout_marginTop="4dp">
+                        <com.google.android.material.button.MaterialButton android:id="@+id/buttonArmorBackMinus" style="@style/ArmorStepperButton" android:text="−" />
+                        <EditText android:id="@+id/editArmorBack" style="@style/ArmorStepperField" android:text="0" />
+                        <com.google.android.material.button.MaterialButton android:id="@+id/buttonArmorBackPlus" style="@style/ArmorStepperButton" android:text="+" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:layout_marginTop="16dp">
+                <LinearLayout style="@style/ArmorFacingBlock">
+                    <TextView style="@style/ArmorFacingLabel" android:text="Left" />
+                    <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content" android:orientation="horizontal" android:gravity="center_vertical" android:layout_marginTop="4dp">
+                        <com.google.android.material.button.MaterialButton android:id="@+id/buttonArmorLeftMinus" style="@style/ArmorStepperButton" android:text="−" />
+                        <EditText android:id="@+id/editArmorLeft" style="@style/ArmorStepperField" android:text="0" />
+                        <com.google.android.material.button.MaterialButton android:id="@+id/buttonArmorLeftPlus" style="@style/ArmorStepperButton" android:text="+" />
+                    </LinearLayout>
+                </LinearLayout>
+                <LinearLayout style="@style/ArmorFacingBlock" android:layout_marginStart="16dp">
+                    <TextView style="@style/ArmorFacingLabel" android:text="Right" />
+                    <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content" android:orientation="horizontal" android:gravity="center_vertical" android:layout_marginTop="4dp">
+                        <com.google.android.material.button.MaterialButton android:id="@+id/buttonArmorRightMinus" style="@style/ArmorStepperButton" android:text="−" />
+                        <EditText android:id="@+id/editArmorRight" style="@style/ArmorStepperField" android:text="0" />
+                        <com.google.android.material.button.MaterialButton android:id="@+id/buttonArmorRightPlus" style="@style/ArmorStepperButton" android:text="+" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:layout_marginTop="16dp">
+                <LinearLayout style="@style/ArmorFacingBlock">
+                    <TextView style="@style/ArmorFacingLabel" android:text="Top" />
+                    <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content" android:orientation="horizontal" android:gravity="center_vertical" android:layout_marginTop="4dp">
+                        <com.google.android.material.button.MaterialButton android:id="@+id/buttonArmorTopMinus" style="@style/ArmorStepperButton" android:text="−" />
+                        <EditText android:id="@+id/editArmorTop" style="@style/ArmorStepperField" android:text="0" />
+                        <com.google.android.material.button.MaterialButton android:id="@+id/buttonArmorTopPlus" style="@style/ArmorStepperButton" android:text="+" />
+                    </LinearLayout>
+                </LinearLayout>
+                <LinearLayout style="@style/ArmorFacingBlock" android:layout_marginStart="16dp">
+                    <TextView style="@style/ArmorFacingLabel" android:text="Underbody" />
+                    <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content" android:orientation="horizontal" android:gravity="center_vertical" android:layout_marginTop="4dp">
+                        <com.google.android.material.button.MaterialButton android:id="@+id/buttonArmorUnderbodyMinus" style="@style/ArmorStepperButton" android:text="−" />
+                        <EditText android:id="@+id/editArmorUnderbody" style="@style/ArmorStepperField" android:text="0" />
+                        <com.google.android.material.button.MaterialButton android:id="@+id/buttonArmorUnderbodyPlus" style="@style/ArmorStepperButton" android:text="+" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+            <TextView style="@style/SectionHeader" android:text="Weapons" />
+
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:gravity="center_vertical">
+                <Spinner android:id="@+id/spinnerWeapon" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" />
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/buttonAddWeapon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:backgroundTint="@color/primary"
+                    android:text="Add" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/textNoWeapons"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="No weapons mounted."
+                android:textColor="#808080" />
+
+            <LinearLayout
+                android:id="@+id/layoutMountedWeapons"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" />
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="2dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Summary"
+                        android:textStyle="bold"
+                        android:textSize="18sp"
+                        android:layout_marginBottom="8dp" />
+
+                    <TextView android:id="@+id/textTotalCost" style="@style/SummaryRow" />
+                    <TextView android:id="@+id/textAmmoCost" style="@style/SummaryRow" />
+                    <TextView android:id="@+id/textDriver" style="@style/SummaryRow" />
+                    <TextView android:id="@+id/textSpaces" style="@style/SummaryRow" />
+                    <TextView android:id="@+id/textWeight" style="@style/SummaryRow" />
+                    <TextView android:id="@+id/textHandlingClass" style="@style/SummaryRow" />
+                    <TextView android:id="@+id/textAcceleration" style="@style/SummaryRow" />
+                    <TextView android:id="@+id/textTopSpeed" style="@style/SummaryRow" />
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="16dp">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/buttonCancel"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="Cancel" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/buttonSave"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:backgroundTint="@color/primary"
+                    android:text="Save Vehicle" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>
