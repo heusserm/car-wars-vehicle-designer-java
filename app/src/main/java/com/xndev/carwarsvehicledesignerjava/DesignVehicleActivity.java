@@ -375,7 +375,7 @@ public class DesignVehicleActivity extends AppCompatActivity {
 
         BodyType body = (BodyType) spinnerBodyType.getSelectedItem();
         ChassisType chassis = (ChassisType) spinnerChassis.getSelectedItem();
-        String chassisSummary = String.format("%s %s", chassis.name, body.name);
+        SuspensionType suspension = (SuspensionType) spinnerSuspension.getSelectedItem();
 
         RadioGroup radioGroup = findViewById(R.id.radioGroupPowerPlantType);
         String powerPlantSummary;
@@ -387,18 +387,12 @@ public class DesignVehicleActivity extends AppCompatActivity {
             powerPlantSummary = engine != null ? engine.name : "Gas engine";
         }
 
-        String notes = String.format(Locale.US,
-                "Cost $%.0f (incl. $%.0f ammo) | %.0f lb | HC %d | Accel %s | Top speed %.1f mph | %d weapon(s) mounted",
-                latestStats.totalCost, latestStats.ammoCost, latestStats.totalWeight, latestStats.handlingClass,
-                latestStats.isUnderpowered ? "underpowered" : latestStats.acceleration + " mph",
-                latestStats.topSpeed, mountedWeapons.size());
-
         TireType tire = (TireType) spinnerTireType.getSelectedItem();
 
         ArrayList<String> weaponLines = new ArrayList<>();
         for (MountedWeapon mounted : mountedWeapons) {
             Weapon weapon = mounted.weapon;
-            String line = String.format(Locale.US, "%s (Dam %s) — $%d, %d lb, %s sp",
+            String line = String.format(Locale.US, "%s %s — $%d, %d lb, %s sp",
                     weapon.name, weapon.damage, weapon.cost, weapon.weight, formatSpace(weapon.space));
             if (weapon.ammoPerBox > 0) {
                 line += String.format(Locale.US, " — Ammo: %d rounds ($%.0f)", mounted.ammoRounds, mounted.ammoCost());
@@ -406,8 +400,10 @@ public class DesignVehicleActivity extends AppCompatActivity {
             weaponLines.add(line);
         }
 
-        VehicleGarage.SAVED_VEHICLES.add(new Vehicle(name, chassisSummary, powerPlantSummary, notes,
-                armor.front, armor.back, armor.left, armor.right, armor.top, armor.underbody, tire.dp, weaponLines));
+        VehicleGarage.SAVED_VEHICLES.add(new Vehicle(name, body.name, chassis.name, suspension.name, powerPlantSummary,
+                "", armor.front, armor.back, armor.left, armor.right, armor.top, armor.underbody, tire.dp, weaponLines,
+                latestStats.totalCost, latestStats.totalWeight, latestStats.handlingClass, latestStats.acceleration,
+                latestStats.isUnderpowered, latestStats.topSpeed));
         VehicleGarage.persist(this);
         Toast.makeText(this, name + " saved", Toast.LENGTH_SHORT).show();
         finish();

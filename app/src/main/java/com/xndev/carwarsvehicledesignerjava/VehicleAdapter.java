@@ -46,7 +46,7 @@ public class VehicleAdapter extends RecyclerView.Adapter<VehicleAdapter.ViewHold
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Vehicle vehicle = vehicles.get(position);
         holder.name.setText(vehicle.name);
-        holder.chassis.setText(vehicle.chassis);
+        holder.chassis.setText(vehicle.chassisType + " " + vehicle.bodyType);
         holder.content.setOnClickListener(v -> clickListener.onVehicleClick(vehicle));
         holder.deleteButton.setOnClickListener(v -> deleteListener.onVehicleDelete(vehicle));
     }

@@ -40,7 +40,9 @@ public final class VehicleGarage {
                 }
                 SAVED_VEHICLES.add(new Vehicle(
                         obj.getString("name"),
-                        obj.getString("chassis"),
+                        obj.getString("bodyType"),
+                        obj.getString("chassisType"),
+                        obj.getString("suspensionType"),
                         obj.getString("powerPlant"),
                         obj.getString("notes"),
                         obj.getInt("armorFront"),
@@ -50,7 +52,13 @@ public final class VehicleGarage {
                         obj.getInt("armorTop"),
                         obj.getInt("armorUnderbody"),
                         obj.getInt("tireDp"),
-                        weapons
+                        weapons,
+                        obj.getDouble("totalCost"),
+                        obj.getDouble("weight"),
+                        obj.getInt("handlingClass"),
+                        obj.getInt("acceleration"),
+                        obj.getBoolean("isUnderpowered"),
+                        obj.getDouble("topSpeed")
                 ));
             }
         } catch (JSONException ignored) {
@@ -64,7 +72,9 @@ public final class VehicleGarage {
             JSONObject obj = new JSONObject();
             try {
                 obj.put("name", vehicle.name);
-                obj.put("chassis", vehicle.chassis);
+                obj.put("bodyType", vehicle.bodyType);
+                obj.put("chassisType", vehicle.chassisType);
+                obj.put("suspensionType", vehicle.suspensionType);
                 obj.put("powerPlant", vehicle.powerPlant);
                 obj.put("notes", vehicle.notes);
                 obj.put("armorFront", vehicle.armorFront);
@@ -75,6 +85,12 @@ public final class VehicleGarage {
                 obj.put("armorUnderbody", vehicle.armorUnderbody);
                 obj.put("tireDp", vehicle.tireDp);
                 obj.put("weapons", new JSONArray(vehicle.weapons));
+                obj.put("totalCost", vehicle.totalCost);
+                obj.put("weight", vehicle.weight);
+                obj.put("handlingClass", vehicle.handlingClass);
+                obj.put("acceleration", vehicle.acceleration);
+                obj.put("isUnderpowered", vehicle.isUnderpowered);
+                obj.put("topSpeed", vehicle.topSpeed);
             } catch (JSONException ignored) {
             }
             array.put(obj);

@@ -24,16 +24,13 @@
             android:padding="16dp">
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Chassis"
-                android:textStyle="bold"
-                android:textSize="14sp" />
+                android:id="@+id/textBodyType"
+                style="@style/DetailListRow"
+                android:layout_marginTop="0dp" />
+            <TextView android:id="@+id/textChassisType" style="@style/DetailListRow" />
             <TextView
-                android:id="@+id/textChassis"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="16sp"
+                android:id="@+id/textSuspensionType"
+                style="@style/DetailListRow"
                 android:layout_marginBottom="16dp" />
 
             <TextView
@@ -56,12 +53,27 @@
                 android:textStyle="bold"
                 android:textSize="14sp" />
 
-            <TextView android:id="@+id/textArmorFront" style="@style/DetailListRow" />
-            <TextView android:id="@+id/textArmorBack" style="@style/DetailListRow" />
-            <TextView android:id="@+id/textArmorLeft" style="@style/DetailListRow" />
-            <TextView android:id="@+id/textArmorRight" style="@style/DetailListRow" />
-            <TextView android:id="@+id/textArmorTop" style="@style/DetailListRow" />
-            <TextView android:id="@+id/textArmorUnderbody" style="@style/DetailListRow" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView android:id="@+id/textArmorFront" style="@style/DetailListRowHalf" />
+                <TextView android:id="@+id/textArmorBack" style="@style/DetailListRowHalf" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView android:id="@+id/textArmorLeft" style="@style/DetailListRowHalf" />
+                <TextView android:id="@+id/textArmorRight" style="@style/DetailListRowHalf" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView android:id="@+id/textArmorTop" style="@style/DetailListRowHalf" />
+                <TextView android:id="@+id/textArmorUnderbody" style="@style/DetailListRowHalf" />
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/textTires"
@@ -87,17 +99,30 @@
                 android:textSize="16sp"
                 android:layout_marginBottom="16dp" />
 
-            <TextView
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:id="@+id/layoutNotes"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Notes"
-                android:textStyle="bold"
-                android:textSize="14sp" />
-            <TextView
-                android:id="@+id/textNotes"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="16sp" />
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Notes"
+                    android:textStyle="bold"
+                    android:textSize="14sp" />
+                <TextView
+                    android:id="@+id/textNotes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:layout_marginBottom="16dp" />
+            </LinearLayout>
+
+            <TextView android:id="@+id/textHandlingClass" style="@style/DetailListRow" />
+            <TextView android:id="@+id/textWeight" style="@style/DetailListRow" />
+            <TextView android:id="@+id/textAcceleration" style="@style/DetailListRow" />
+            <TextView android:id="@+id/textTopSpeed" style="@style/DetailListRow" />
+            <TextView android:id="@+id/textTotalCost" style="@style/DetailListRow" />
 
         </LinearLayout>
     </ScrollView>

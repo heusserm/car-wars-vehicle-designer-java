@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
@@ -18,7 +19,9 @@ import java.util.Locale;
 
 public class VehicleDetailActivity extends AppCompatActivity {
     public static final String EXTRA_NAME = "extra_name";
-    public static final String EXTRA_CHASSIS = "extra_chassis";
+    public static final String EXTRA_BODY_TYPE = "extra_body_type";
+    public static final String EXTRA_CHASSIS_TYPE = "extra_chassis_type";
+    public static final String EXTRA_SUSPENSION_TYPE = "extra_suspension_type";
     public static final String EXTRA_POWER_PLANT = "extra_power_plant";
     public static final String EXTRA_NOTES = "extra_notes";
     public static final String EXTRA_ARMOR_FRONT = "extra_armor_front";
@@ -29,6 +32,12 @@ public class VehicleDetailActivity extends AppCompatActivity {
     public static final String EXTRA_ARMOR_UNDERBODY = "extra_armor_underbody";
     public static final String EXTRA_TIRE_DP = "extra_tire_dp";
     public static final String EXTRA_WEAPONS = "extra_weapons";
+    public static final String EXTRA_TOTAL_COST = "extra_total_cost";
+    public static final String EXTRA_WEIGHT = "extra_weight";
+    public static final String EXTRA_HANDLING_CLASS = "extra_handling_class";
+    public static final String EXTRA_ACCELERATION = "extra_acceleration";
+    public static final String EXTRA_IS_UNDERPOWERED = "extra_is_underpowered";
+    public static final String EXTRA_TOP_SPEED = "extra_top_speed";
     public static final String EXTRA_SAVED_INDEX = "extra_saved_index";
 
     private static final int MENU_ID_DELETE = 1;
@@ -42,7 +51,9 @@ public class VehicleDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_vehicle_detail);
 
         name = getIntent().getStringExtra(EXTRA_NAME);
-        String chassis = getIntent().getStringExtra(EXTRA_CHASSIS);
+        String bodyType = getIntent().getStringExtra(EXTRA_BODY_TYPE);
+        String chassisType = getIntent().getStringExtra(EXTRA_CHASSIS_TYPE);
+        String suspensionType = getIntent().getStringExtra(EXTRA_SUSPENSION_TYPE);
         String powerPlant = getIntent().getStringExtra(EXTRA_POWER_PLANT);
         String notes = getIntent().getStringExtra(EXTRA_NOTES);
         int armorFront = getIntent().getIntExtra(EXTRA_ARMOR_FRONT, 0);
@@ -53,6 +64,12 @@ public class VehicleDetailActivity extends AppCompatActivity {
         int armorUnderbody = getIntent().getIntExtra(EXTRA_ARMOR_UNDERBODY, 0);
         int tireDp = getIntent().getIntExtra(EXTRA_TIRE_DP, 0);
         ArrayList<String> weapons = getIntent().getStringArrayListExtra(EXTRA_WEAPONS);
+        double totalCost = getIntent().getDoubleExtra(EXTRA_TOTAL_COST, 0);
+        double weight = getIntent().getDoubleExtra(EXTRA_WEIGHT, 0);
+        int handlingClass = getIntent().getIntExtra(EXTRA_HANDLING_CLASS, 0);
+        int acceleration = getIntent().getIntExtra(EXTRA_ACCELERATION, 0);
+        boolean isUnderpowered = getIntent().getBooleanExtra(EXTRA_IS_UNDERPOWERED, false);
+        double topSpeed = getIntent().getDoubleExtra(EXTRA_TOP_SPEED, 0);
         savedIndex = getIntent().getIntExtra(EXTRA_SAVED_INDEX, -1);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -63,16 +80,17 @@ public class VehicleDetailActivity extends AppCompatActivity {
         }
         toolbar.setNavigationOnClickListener(v -> finish());
 
-        ((TextView) findViewById(R.id.textChassis)).setText(chassis);
+        ((TextView) findViewById(R.id.textBodyType)).setText(String.format(Locale.US, "Body: %s", bodyType));
+        ((TextView) findViewById(R.id.textChassisType)).setText(String.format(Locale.US, "Chassis: %s", chassisType));
+        ((TextView) findViewById(R.id.textSuspensionType)).setText(String.format(Locale.US, "Suspension: %s", suspensionType));
         ((TextView) findViewById(R.id.textPowerPlant)).setText(powerPlant);
-        ((TextView) findViewById(R.id.textNotes)).setText(notes);
 
         ((TextView) findViewById(R.id.textArmorFront)).setText(String.format(Locale.US, "Front: %d DP", armorFront));
         ((TextView) findViewById(R.id.textArmorBack)).setText(String.format(Locale.US, "Back: %d DP", armorBack));
         ((TextView) findViewById(R.id.textArmorLeft)).setText(String.format(Locale.US, "Left: %d DP", armorLeft));
         ((TextView) findViewById(R.id.textArmorRight)).setText(String.format(Locale.US, "Right: %d DP", armorRight));
         ((TextView) findViewById(R.id.textArmorTop)).setText(String.format(Locale.US, "Top: %d DP", armorTop));
-        ((TextView) findViewById(R.id.textArmorUnderbody)).setText(String.format(Locale.US, "Underbody: %d DP", armorUnderbody));
+        ((TextView) findViewById(R.id.textArmorUnderbody)).setText(String.format(Locale.US, "Under: %d DP", armorUnderbody));
         ((TextView) findViewById(R.id.textTires)).setText(String.format(Locale.US, "Tires: %d DP each", tireDp));
         ((TextView) findViewById(R.id.textDriver)).setText(String.format(Locale.US, "Driver: %d lb, %d DP",
                 VehicleCalculator.DRIVER_WEIGHT, VehicleCalculator.DRIVER_DP));
@@ -81,6 +99,22 @@ public class VehicleDetailActivity extends AppCompatActivity {
                 ? "No weapons mounted."
                 : TextUtils.join("\n\n", weapons);
         ((TextView) findViewById(R.id.textWeapons)).setText(weaponsText);
+
+        View notesSection = findViewById(R.id.layoutNotes);
+        if (notes == null || notes.isEmpty()) {
+            notesSection.setVisibility(View.GONE);
+        } else {
+            notesSection.setVisibility(View.VISIBLE);
+            ((TextView) findViewById(R.id.textNotes)).setText(notes);
+        }
+
+        ((TextView) findViewById(R.id.textHandlingClass)).setText(String.format(Locale.US, "HC: %d", handlingClass));
+        ((TextView) findViewById(R.id.textWeight)).setText(String.format(Locale.US, "Weight: %.0f lb", weight));
+        ((TextView) findViewById(R.id.textAcceleration)).setText(isUnderpowered
+                ? "Accel: Underpowered – vehicle will not move"
+                : String.format(Locale.US, "Accel: %d mph", acceleration));
+        ((TextView) findViewById(R.id.textTopSpeed)).setText(String.format(Locale.US, "Top Speed: %.1f mph", topSpeed));
+        ((TextView) findViewById(R.id.textTotalCost)).setText(String.format(Locale.US, "Cost: $%.0f", totalCost));
     }
 
     @Override

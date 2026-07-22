@@ -58,7 +58,9 @@ public class VehicleListActivity extends AppCompatActivity {
     private void openDetail(Vehicle vehicle) {
         Intent intent = new Intent(this, VehicleDetailActivity.class);
         intent.putExtra(VehicleDetailActivity.EXTRA_NAME, vehicle.name);
-        intent.putExtra(VehicleDetailActivity.EXTRA_CHASSIS, vehicle.chassis);
+        intent.putExtra(VehicleDetailActivity.EXTRA_BODY_TYPE, vehicle.bodyType);
+        intent.putExtra(VehicleDetailActivity.EXTRA_CHASSIS_TYPE, vehicle.chassisType);
+        intent.putExtra(VehicleDetailActivity.EXTRA_SUSPENSION_TYPE, vehicle.suspensionType);
         intent.putExtra(VehicleDetailActivity.EXTRA_POWER_PLANT, vehicle.powerPlant);
         intent.putExtra(VehicleDetailActivity.EXTRA_NOTES, vehicle.notes);
         intent.putExtra(VehicleDetailActivity.EXTRA_ARMOR_FRONT, vehicle.armorFront);
@@ -69,6 +71,12 @@ public class VehicleListActivity extends AppCompatActivity {
         intent.putExtra(VehicleDetailActivity.EXTRA_ARMOR_UNDERBODY, vehicle.armorUnderbody);
         intent.putExtra(VehicleDetailActivity.EXTRA_TIRE_DP, vehicle.tireDp);
         intent.putStringArrayListExtra(VehicleDetailActivity.EXTRA_WEAPONS, vehicle.weapons);
+        intent.putExtra(VehicleDetailActivity.EXTRA_TOTAL_COST, vehicle.totalCost);
+        intent.putExtra(VehicleDetailActivity.EXTRA_WEIGHT, vehicle.weight);
+        intent.putExtra(VehicleDetailActivity.EXTRA_HANDLING_CLASS, vehicle.handlingClass);
+        intent.putExtra(VehicleDetailActivity.EXTRA_ACCELERATION, vehicle.acceleration);
+        intent.putExtra(VehicleDetailActivity.EXTRA_IS_UNDERPOWERED, vehicle.isUnderpowered);
+        intent.putExtra(VehicleDetailActivity.EXTRA_TOP_SPEED, vehicle.topSpeed);
         intent.putExtra(VehicleDetailActivity.EXTRA_SAVED_INDEX, VehicleGarage.SAVED_VEHICLES.indexOf(vehicle));
         startActivity(intent);
     }
