@@ -68,12 +68,14 @@ public final class VehicleCalculator {
 
         double weaponsCost = 0;
         double ammoCost = 0;
-        int weaponsWeight = 0;
+        double weaponsWeight = 0;
+        double ammoWeight = 0;
         double weaponsSpace = 0;
         for (MountedWeapon mw : in.mountedWeapons) {
             weaponsCost += mw.weapon.cost;
             ammoCost += mw.ammoCost();
             weaponsWeight += mw.weapon.weight;
+            ammoWeight += mw.ammoWeight();
             weaponsSpace += mw.weapon.space;
         }
 
@@ -81,7 +83,7 @@ public final class VehicleCalculator {
                 + weaponsCost + ammoCost;
 
         double totalWeight = in.body.weight + powerPlantWeight + tiresWeight + armorWeight
-                + weaponsWeight + DRIVER_WEIGHT;
+                + weaponsWeight + ammoWeight + DRIVER_WEIGHT;
 
         double spacesUsed = powerPlantSpacesUsed + weaponsSpace + DRIVER_SPACES;
         double spacesAvailable = in.body.spaces - spacesUsed;

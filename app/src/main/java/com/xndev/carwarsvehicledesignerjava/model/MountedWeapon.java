@@ -13,4 +13,8 @@ public class MountedWeapon {
     public double ammoCost() {
         return ammoRounds * weapon.costPerShot;
     }
+
+    public double ammoWeight() {
+        return ammoRounds * weapon.weightPerShot;
+    }
 }
