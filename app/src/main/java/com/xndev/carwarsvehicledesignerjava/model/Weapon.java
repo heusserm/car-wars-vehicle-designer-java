@@ -1,5 +1,6 @@
 package com.xndev.carwarsvehicledesignerjava.model;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -40,19 +41,20 @@ public class Weapon {
     }
 
     /**
-     * Core offensive weapons from the Weapon Charts (Small/Large-Bore Projectile,
-     * Rockets, Lasers, Flamethrowers). Dropped gases/liquids/solids and hand
-     * dischargers are left out of this pass.
+     * Weapons are grouped into four pickers: projectiles, rockets, streams
+     * (lasers + flamethrowers) and dropped weapons.
      *
      * ammoPerBox/costPerShot/weightPerShot are cross-checked against the Weapon
-     * Charts in the Car Wars Compendium (SJG30-7142), pages 50-51. Where a weapon
-     * has multiple ammo types (HEAT/APFSDS/HESH, standard/incendiary, etc.), the
-     * base/standard round is used. Grenade Launcher, Mine-Flinger, Micromissile
-     * Launcher, and Variable-Fire Rocket Pod are left out: their ammo rules
-     * (variable-cost loads, multi-shot pods) are more complex than this app models.
+     * Charts in the Car Wars Compendium (SJG30-7142). Where a weapon has multiple
+     * ammo types (HEAT/APFSDS/HESH, standard/incendiary, etc.), the base/standard
+     * round is used. A handful of weapons with variable-cost loads or multi-shot
+     * pods (Grenade Launcher, Mine-Flinger, Micromissile Launcher, Variable-Fire
+     * Rocket Pod, Gas Streamer) are left out, as are bus/semitrailer-only items.
      */
-    public static final List<Weapon> ALL = Arrays.asList(
-            // Small-Bore Projectile Weapons
+
+    /** Projectile weapons (small- and large-bore). */
+    public static final List<Weapon> PROJECTILES = Arrays.asList(
+            // Small-Bore
             new Weapon("Machine Gun", "MG", "7", "1d", 3, 1000, 150, 1, 20, 25, 2.5),
             new Weapon("Vulcan MG", "VMG", "6", "2d", 3, 2000, 350, 2, 20, 35, 5),
             new Weapon("Flechette Gun", "FG", "6", "1d+1", 2, 700, 100, 1, 20, 10, 2.5),
@@ -61,7 +63,7 @@ public class Weapon {
             new Weapon("Recoilless Rifle", "RR", "7", "2d", 4, 1500, 300, 2, 10, 35, 5),
             new Weapon("Autocannon", "AC", "6", "3d", 4, 6500, 500, 3, 10, 75, 10),
 
-            // Large-Bore Projectile Weapons
+            // Large-Bore
             new Weapon("Bomb", "B", "9", "4d", 2, 100, 100, 2, 0, 0, 0),
             new Weapon("Cluster Bomb", "CB", "9", "2d", 2, 200, 150, 2, 0, 0, 0),
             new Weapon("Starshell Launcher", "SL", "-", "-", 2, 500, 100, 1, 5, 50, 5),
@@ -70,11 +72,15 @@ public class Weapon {
             new Weapon("Oil Gun", "OG", "7/5", "-", 3, 1000, 250, 3, 10, 25, 5),
             new Weapon("Paint Gun", "PG", "7/5", "-", 3, 1000, 250, 3, 10, 25, 5),
             new Weapon("Blast Cannon", "BC", "7", "4d", 5, 4500, 500, 4, 10, 100, 10),
-            new Weapon("Tank Gun", "TG", "7", "8d", 10, 10000, 1200, 10, 10, 100, 20),
+            new Weapon("Tank Gun", "TG", "7", "8d", 10, 10000, 1200, 10, 10, 100, 20)
+    );
 
-            // Rockets - most are single-shot rounds where the listed cost already
-            // prices one round, so no separate ammo purchase is modeled. Rocket
-            // Launcher is magazine-fed per the chart and does have purchasable ammo.
+    /**
+     * Rockets - most are single-shot rounds where the listed cost already prices
+     * one round, so no separate ammo purchase is modeled. Rocket Launcher is
+     * magazine-fed per the chart and does have purchasable ammo.
+     */
+    public static final List<Weapon> ROCKETS = Arrays.asList(
             new Weapon("Mini Rocket", "MNR", "9", "1d-1", 1, 50, 20, 1.0 / 3, 0, 0, 0),
             new Weapon("Light Rocket", "LtR", "9", "1d", 1, 75, 25, 0.5, 0, 0, 0),
             new Weapon("Medium Rocket", "MR", "9", "2d", 2, 140, 50, 1, 0, 0, 0),
@@ -84,9 +90,15 @@ public class Weapon {
             new Weapon("Radar-Guided Missile", "RGM", "7", "3d", 1, 3000, 100, 1, 0, 0, 0),
             new Weapon("Wire-Guided Missile", "WGM", "6", "3d", 1, 2000, 100, 1, 0, 0, 0),
             new Weapon("Six-Shooter", "-", "9", "1d*", 2, 450, 150, 2, 0, 0, 0),
-            new Weapon("Rocket Launcher", "RL", "8", "2d", 2, 1000, 200, 2, 10, 35, 5),
+            new Weapon("Rocket Launcher", "RL", "8", "2d", 2, 1000, 200, 2, 10, 35, 5)
+    );
 
-            // Lasers - draw power from the plant, no purchasable ammo.
+    /**
+     * Stream weapons - lasers (draw power from the plant, no purchasable ammo)
+     * and flamethrowers (magazine-fed).
+     */
+    public static final List<Weapon> STREAMS = Arrays.asList(
+            // Lasers
             new Weapon("Targeting Laser", "TL", "6", "-", 1, 1000, 50, 0, 0, 0, 0),
             new Weapon("Light Laser", "LL", "6", "1d", 2, 3000, 200, 1, 0, 0, 0),
             new Weapon("Medium Laser", "ML", "6", "2d", 2, 5500, 350, 2, 0, 0, 0),
@@ -101,4 +113,44 @@ public class Weapon {
             new Weapon("Flamethrower", "FT", "6", "1d", 2, 500, 450, 2, 10, 25, 5),
             new Weapon("HD Flamethrower", "HDFT", "6", "2d", 3, 1250, 650, 3, 10, 50, 10)
     );
+
+    /**
+     * Dropped weapons (clouds, slicks, spikes, mines). Released behind or beneath
+     * the vehicle rather than aimed, so to-hit and damage are shown as '-'.
+     * Drop-plates are single-use with no reloadable ammo.
+     */
+    public static final List<Weapon> DROPPED = Arrays.asList(
+            new Weapon("Smokescreen", "SS", "-", "-", 4, 250, 25, 1, 10, 10, 5),
+            new Weapon("HD Smokescreen", "HDSS", "-", "-", 4, 500, 50, 2, 10, 40, 20),
+            new Weapon("Paint Spray", "PS", "-", "-", 2, 400, 25, 1, 25, 10, 2),
+            new Weapon("HD Paint Spray", "HDPS", "-", "-", 3, 800, 50, 2, 10, 40, 8),
+            new Weapon("Flame Cloud Ejector", "FCE", "-", "-", 2, 500, 50, 2, 10, 60, 5),
+            new Weapon("HD Flame Cloud Ejector", "HDFCE", "-", "-", 2, 1000, 100, 3, 10, 240, 20),
+            new Weapon("Flame Cloud Gas Streamer", "FCGS", "-", "-", 1, 200, 100, 2, 2, 300, 25),
+            new Weapon("Oil Jet", "OJ", "-", "-", 3, 250, 25, 2, 25, 10, 2),
+            new Weapon("HD Oil Jet", "HDOJ", "-", "-", 4, 500, 50, 3, 10, 40, 8),
+            new Weapon("Flaming Oil Jet", "FOJ", "-", "-", 3, 300, 30, 2, 25, 35, 2),
+            new Weapon("Heavy Flaming Oil Jet", "HFOJ", "-", "-", 4, 550, 60, 3, 10, 140, 8),
+            new Weapon("Ice Dropper", "ID", "-", "-", 3, 750, 50, 2, 25, 20, 2),
+            new Weapon("HD Ice Dropper", "HDID", "-", "-", 4, 1000, 100, 3, 10, 100, 10),
+            new Weapon("Chaff Dispenser", "CD", "-", "-", 2, 300, 25, 1, 10, 10, 2),
+            new Weapon("HD Chaff Dispenser", "HDCD", "-", "-", 2, 600, 50, 2, 10, 40, 8),
+            new Weapon("Junk Dropper", "JD", "-", "-", 4, 50, 25, 1, 10, 0, 10),
+            new Weapon("Minedropper", "MD", "-", "2d", 2, 500, 150, 2, 10, 50, 5),
+            new Weapon("Spear 1000 Minedropper", "SMD", "-", "2d", 2, 750, 150, 2, 5, 100, 10),
+            new Weapon("Spikedropper", "SD", "-", "-", 4, 100, 25, 1, 10, 20, 5),
+            new Weapon("Drop-Spike Plate", "DSP", "-", "-", 4, 200, 50, 1, 0, 0, 0)
+    );
+
+    /** All weapons across every category, in picker order. */
+    public static final List<Weapon> ALL = buildAll();
+
+    private static List<Weapon> buildAll() {
+        List<Weapon> all = new ArrayList<>();
+        all.addAll(PROJECTILES);
+        all.addAll(ROCKETS);
+        all.addAll(STREAMS);
+        all.addAll(DROPPED);
+        return all;
+    }
 }

@@ -53,7 +53,10 @@ public class DesignVehicleActivity extends AppCompatActivity {
     private Spinner spinnerGasEngine;
     private Spinner spinnerGasTankType;
     private Spinner spinnerTireType;
-    private Spinner spinnerWeapon;
+    private Spinner spinnerProjectile;
+    private Spinner spinnerRocket;
+    private Spinner spinnerStream;
+    private Spinner spinnerDropped;
     private Spinner spinnerAccessory;
 
     private LinearLayout layoutGasFields;
@@ -126,7 +129,10 @@ public class DesignVehicleActivity extends AppCompatActivity {
         spinnerGasEngine = findViewById(R.id.spinnerGasEngine);
         spinnerGasTankType = findViewById(R.id.spinnerGasTankType);
         spinnerTireType = findViewById(R.id.spinnerTireType);
-        spinnerWeapon = findViewById(R.id.spinnerWeapon);
+        spinnerProjectile = findViewById(R.id.spinnerProjectile);
+        spinnerRocket = findViewById(R.id.spinnerRocket);
+        spinnerStream = findViewById(R.id.spinnerStream);
+        spinnerDropped = findViewById(R.id.spinnerDropped);
         spinnerAccessory = findViewById(R.id.spinnerAccessory);
 
         layoutGasFields = findViewById(R.id.layoutGasFields);
@@ -171,7 +177,10 @@ public class DesignVehicleActivity extends AppCompatActivity {
         setupSpinner(spinnerGasEngine, GasEngine.ALL);
         setupSpinner(spinnerGasTankType, GasTankType.ALL);
         setupSpinner(spinnerTireType, TireType.ALL);
-        setupSpinner(spinnerWeapon, Weapon.ALL);
+        setupSpinner(spinnerProjectile, Weapon.PROJECTILES);
+        setupSpinner(spinnerRocket, Weapon.ROCKETS);
+        setupSpinner(spinnerStream, Weapon.STREAMS);
+        setupSpinner(spinnerDropped, Weapon.DROPPED);
         setupSpinner(spinnerAccessory, Accessory.ALL);
     }
 
@@ -245,7 +254,10 @@ public class DesignVehicleActivity extends AppCompatActivity {
         checkBodyArmor.setOnCheckedChangeListener((v, checked) -> recalculate());
         radioGroupTargetingComputer.setOnCheckedChangeListener((group, checkedId) -> recalculate());
 
-        findViewById(R.id.buttonAddWeapon).setOnClickListener(v -> addSelectedWeapon());
+        findViewById(R.id.buttonAddProjectile).setOnClickListener(v -> addSelectedWeapon(spinnerProjectile));
+        findViewById(R.id.buttonAddRocket).setOnClickListener(v -> addSelectedWeapon(spinnerRocket));
+        findViewById(R.id.buttonAddStream).setOnClickListener(v -> addSelectedWeapon(spinnerStream));
+        findViewById(R.id.buttonAddDropped).setOnClickListener(v -> addSelectedWeapon(spinnerDropped));
         findViewById(R.id.buttonAddAccessory).setOnClickListener(v -> addSelectedAccessory());
         findViewById(R.id.buttonCancel).setOnClickListener(v -> finish());
         findViewById(R.id.buttonSave).setOnClickListener(v -> saveVehicle());
@@ -290,8 +302,8 @@ public class DesignVehicleActivity extends AppCompatActivity {
         edit.setText(String.valueOf(Math.max(0, current + delta)));
     }
 
-    private void addSelectedWeapon() {
-        Weapon weapon = (Weapon) spinnerWeapon.getSelectedItem();
+    private void addSelectedWeapon(Spinner spinner) {
+        Weapon weapon = (Weapon) spinner.getSelectedItem();
         if (weapon == null) return;
         mountedWeapons.add(new MountedWeapon(weapon));
         rebuildMountedWeaponsList();
@@ -431,7 +443,7 @@ public class DesignVehicleActivity extends AppCompatActivity {
 
     private void updateSummary(VehicleStats stats) {
         textTotalCost.setText(String.format("Total Cost: $%.0f", stats.totalCost));
-        textAmmoCost.setText(String.format("  (includes $%.0f of ammo)", stats.ammoCost));
+        textAmmoCost.setText(String.format("  (includes $%.0f of ammo & magazines)", stats.ammoCost));
         textDriver.setText(String.format(Locale.US, "Driver: %d lb, %d sp, %d DP (included above)", stats.driverWeight, stats.driverSpaces, stats.driverDp));
 
         boolean overSpace = stats.spacesAvailable < 0;

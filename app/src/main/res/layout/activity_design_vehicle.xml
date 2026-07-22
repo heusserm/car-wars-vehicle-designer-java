@@ -153,10 +153,47 @@
 
             <TextView style="@style/SectionHeader" android:text="Weapons" />
 
+            <TextView style="@style/FieldLabel" android:layout_marginTop="0dp" android:text="Projectiles" />
             <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:gravity="center_vertical">
-                <Spinner android:id="@+id/spinnerWeapon" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" />
+                <Spinner android:id="@+id/spinnerProjectile" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" />
                 <com.google.android.material.button.MaterialButton
-                    android:id="@+id/buttonAddWeapon"
+                    android:id="@+id/buttonAddProjectile"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:backgroundTint="@color/primary"
+                    android:text="Add" />
+            </LinearLayout>
+
+            <TextView style="@style/FieldLabel" android:text="Rockets" />
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:gravity="center_vertical">
+                <Spinner android:id="@+id/spinnerRocket" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" />
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/buttonAddRocket"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:backgroundTint="@color/primary"
+                    android:text="Add" />
+            </LinearLayout>
+
+            <TextView style="@style/FieldLabel" android:text="Streams (laser / flamethrower)" />
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:gravity="center_vertical">
+                <Spinner android:id="@+id/spinnerStream" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" />
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/buttonAddStream"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:backgroundTint="@color/primary"
+                    android:text="Add" />
+            </LinearLayout>
+
+            <TextView style="@style/FieldLabel" android:text="Dropped" />
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:gravity="center_vertical">
+                <Spinner android:id="@+id/spinnerDropped" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" />
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/buttonAddDropped"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"

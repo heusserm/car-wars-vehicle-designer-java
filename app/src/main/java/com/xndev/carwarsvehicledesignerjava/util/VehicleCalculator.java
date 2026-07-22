@@ -28,6 +28,14 @@ public final class VehicleCalculator {
     public static final int BODY_ARMOR_COST = 250;
     public static final int BODY_ARMOR_DP_BONUS = 3;
 
+    /**
+     * Each magazine of ammo beyond the first (the base load that comes with the
+     * weapon) costs $50, weighs 15 lb, and takes 1 space, on top of the rounds.
+     */
+    public static final int EXTRA_MAGAZINE_COST = 50;
+    public static final int EXTRA_MAGAZINE_WEIGHT = 15;
+    public static final int EXTRA_MAGAZINE_SPACES = 1;
+
     private VehicleCalculator() {}
 
     public static class Input {
@@ -79,17 +87,28 @@ public final class VehicleCalculator {
         double armorWeight = in.armor.totalPoints() * in.body.armorWeightPerPoint;
 
         double weaponsCost = 0;
-        double ammoCost = 0;
+        double roundsCost = 0;
         double weaponsWeight = 0;
-        double ammoWeight = 0;
+        double roundsWeight = 0;
         double weaponsSpace = 0;
+        int extraMagazines = 0;
         for (MountedWeapon mw : in.mountedWeapons) {
             weaponsCost += mw.weapon.cost;
-            ammoCost += mw.ammoCost();
+            roundsCost += mw.ammoCost();
             weaponsWeight += mw.weapon.weight;
-            ammoWeight += mw.ammoWeight();
+            roundsWeight += mw.ammoWeight();
             weaponsSpace += mw.weapon.space;
+            extraMagazines += mw.extraMagazines();
         }
+
+        // Extra magazines beyond each weapon's base load: $50, 15 lb, 1 space each.
+        double magazineCost = extraMagazines * EXTRA_MAGAZINE_COST;
+        double magazineWeight = extraMagazines * EXTRA_MAGAZINE_WEIGHT;
+        double magazineSpace = extraMagazines * EXTRA_MAGAZINE_SPACES;
+
+        // Displayed "ammo" figure bundles the rounds and the extra-magazine hardware.
+        double ammoCost = roundsCost + magazineCost;
+        double ammoWeight = roundsWeight + magazineWeight;
 
         int bodyArmorCostApplied = in.hasBodyArmor ? BODY_ARMOR_COST : 0;
         int driverDp = BASE_DRIVER_DP + (in.hasBodyArmor ? BODY_ARMOR_DP_BONUS : 0);
@@ -109,7 +128,7 @@ public final class VehicleCalculator {
         double totalWeight = in.body.weight + powerPlantWeight + tiresWeight + armorWeight
                 + weaponsWeight + ammoWeight + DRIVER_WEIGHT + in.targetingComputer.weight + accessoriesWeight;
 
-        double spacesUsed = powerPlantSpacesUsed + weaponsSpace + DRIVER_SPACES
+        double spacesUsed = powerPlantSpacesUsed + weaponsSpace + magazineSpace + DRIVER_SPACES
                 + in.targetingComputer.space + accessoriesSpace;
         double spacesAvailable = in.body.spaces - spacesUsed;
 

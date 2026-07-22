@@ -18,7 +18,9 @@ public class HomeActivity extends AppCompatActivity {
                     + "versions of the game, used with permission (<a href=\"" + POLICY_URL
                     + "\">SJG Online Policy</a>). This app does not provide a standalone game. You can "
                     + "purchase the classic versions of the game that this aid supports at <a href=\""
-                    + STORE_URL + "\">Warehouse 23</a>.";
+                    + STORE_URL + "\">Warehouse 23</a>."
+                    + "<br><br>Application designed and implemented by Matthew Heusser · "
+                    + "<a href=\"mailto:Matt@xndev.com\">Matt@xndev.com</a>";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
