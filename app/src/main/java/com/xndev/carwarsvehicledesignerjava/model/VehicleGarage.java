@@ -38,6 +38,13 @@ public final class VehicleGarage {
                 for (int w = 0; w < weaponsArray.length(); w++) {
                     weapons.add(weaponsArray.getString(w));
                 }
+                ArrayList<String> accessories = new ArrayList<>();
+                JSONArray accessoriesArray = obj.optJSONArray("accessories");
+                if (accessoriesArray != null) {
+                    for (int a = 0; a < accessoriesArray.length(); a++) {
+                        accessories.add(accessoriesArray.getString(a));
+                    }
+                }
                 SAVED_VEHICLES.add(new Vehicle(
                         obj.getString("name"),
                         obj.getString("bodyType"),
@@ -55,6 +62,7 @@ public final class VehicleGarage {
                         weapons,
                         obj.optBoolean("hasBodyArmor", false),
                         obj.optString("targetingComputer", "None"),
+                        accessories,
                         obj.getDouble("totalCost"),
                         obj.getDouble("weight"),
                         obj.getInt("handlingClass"),
@@ -89,6 +97,7 @@ public final class VehicleGarage {
                 obj.put("weapons", new JSONArray(vehicle.weapons));
                 obj.put("hasBodyArmor", vehicle.hasBodyArmor);
                 obj.put("targetingComputer", vehicle.targetingComputer);
+                obj.put("accessories", new JSONArray(vehicle.accessories));
                 obj.put("totalCost", vehicle.totalCost);
                 obj.put("weight", vehicle.weight);
                 obj.put("handlingClass", vehicle.handlingClass);

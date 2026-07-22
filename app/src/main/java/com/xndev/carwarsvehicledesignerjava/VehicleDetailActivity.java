@@ -34,6 +34,7 @@ public class VehicleDetailActivity extends AppCompatActivity {
     public static final String EXTRA_WEAPONS = "extra_weapons";
     public static final String EXTRA_HAS_BODY_ARMOR = "extra_has_body_armor";
     public static final String EXTRA_TARGETING_COMPUTER = "extra_targeting_computer";
+    public static final String EXTRA_ACCESSORIES = "extra_accessories";
     public static final String EXTRA_TOTAL_COST = "extra_total_cost";
     public static final String EXTRA_WEIGHT = "extra_weight";
     public static final String EXTRA_HANDLING_CLASS = "extra_handling_class";
@@ -68,6 +69,7 @@ public class VehicleDetailActivity extends AppCompatActivity {
         ArrayList<String> weapons = getIntent().getStringArrayListExtra(EXTRA_WEAPONS);
         boolean hasBodyArmor = getIntent().getBooleanExtra(EXTRA_HAS_BODY_ARMOR, false);
         String targetingComputer = getIntent().getStringExtra(EXTRA_TARGETING_COMPUTER);
+        ArrayList<String> accessories = getIntent().getStringArrayListExtra(EXTRA_ACCESSORIES);
         double totalCost = getIntent().getDoubleExtra(EXTRA_TOTAL_COST, 0);
         double weight = getIntent().getDoubleExtra(EXTRA_WEIGHT, 0);
         int handlingClass = getIntent().getIntExtra(EXTRA_HANDLING_CLASS, 0);
@@ -106,6 +108,11 @@ public class VehicleDetailActivity extends AppCompatActivity {
                 ? "No weapons mounted."
                 : TextUtils.join("\n\n", weapons);
         ((TextView) findViewById(R.id.textWeapons)).setText(weaponsText);
+
+        String accessoriesText = (accessories == null || accessories.isEmpty())
+                ? "No accessories."
+                : TextUtils.join("\n", accessories);
+        ((TextView) findViewById(R.id.textAccessories)).setText(accessoriesText);
 
         View notesSection = findViewById(R.id.layoutNotes);
         if (notes == null || notes.isEmpty()) {

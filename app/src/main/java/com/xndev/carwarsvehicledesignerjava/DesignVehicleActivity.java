@@ -21,6 +21,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import com.xndev.carwarsvehicledesignerjava.model.Accessory;
 import com.xndev.carwarsvehicledesignerjava.model.BodyType;
 import com.xndev.carwarsvehicledesignerjava.model.ChassisType;
 import com.xndev.carwarsvehicledesignerjava.model.ElectricPowerPlant;
@@ -53,10 +54,13 @@ public class DesignVehicleActivity extends AppCompatActivity {
     private Spinner spinnerGasTankType;
     private Spinner spinnerTireType;
     private Spinner spinnerWeapon;
+    private Spinner spinnerAccessory;
 
     private LinearLayout layoutGasFields;
     private LinearLayout layoutMountedWeapons;
     private TextView textNoWeapons;
+    private LinearLayout layoutAccessories;
+    private TextView textNoAccessories;
 
     private CheckBox checkBodyArmor;
     private RadioGroup radioGroupTargetingComputer;
@@ -79,6 +83,7 @@ public class DesignVehicleActivity extends AppCompatActivity {
     private TextView textTopSpeed;
 
     private final List<MountedWeapon> mountedWeapons = new ArrayList<>();
+    private final List<Accessory> accessories = new ArrayList<>();
     private final VehicleArmor armor = new VehicleArmor();
     private VehicleStats latestStats;
 
@@ -122,10 +127,13 @@ public class DesignVehicleActivity extends AppCompatActivity {
         spinnerGasTankType = findViewById(R.id.spinnerGasTankType);
         spinnerTireType = findViewById(R.id.spinnerTireType);
         spinnerWeapon = findViewById(R.id.spinnerWeapon);
+        spinnerAccessory = findViewById(R.id.spinnerAccessory);
 
         layoutGasFields = findViewById(R.id.layoutGasFields);
         layoutMountedWeapons = findViewById(R.id.layoutMountedWeapons);
         textNoWeapons = findViewById(R.id.textNoWeapons);
+        layoutAccessories = findViewById(R.id.layoutAccessories);
+        textNoAccessories = findViewById(R.id.textNoAccessories);
 
         checkBodyArmor = findViewById(R.id.checkBodyArmor);
         radioGroupTargetingComputer = findViewById(R.id.radioGroupTargetingComputer);
@@ -164,6 +172,7 @@ public class DesignVehicleActivity extends AppCompatActivity {
         setupSpinner(spinnerGasTankType, GasTankType.ALL);
         setupSpinner(spinnerTireType, TireType.ALL);
         setupSpinner(spinnerWeapon, Weapon.ALL);
+        setupSpinner(spinnerAccessory, Accessory.ALL);
     }
 
     private void setupTargetingComputers() {
@@ -237,6 +246,7 @@ public class DesignVehicleActivity extends AppCompatActivity {
         radioGroupTargetingComputer.setOnCheckedChangeListener((group, checkedId) -> recalculate());
 
         findViewById(R.id.buttonAddWeapon).setOnClickListener(v -> addSelectedWeapon());
+        findViewById(R.id.buttonAddAccessory).setOnClickListener(v -> addSelectedAccessory());
         findViewById(R.id.buttonCancel).setOnClickListener(v -> finish());
         findViewById(R.id.buttonSave).setOnClickListener(v -> saveVehicle());
     }
@@ -332,6 +342,46 @@ public class DesignVehicleActivity extends AppCompatActivity {
         }
     }
 
+    private void addSelectedAccessory() {
+        Accessory accessory = (Accessory) spinnerAccessory.getSelectedItem();
+        if (accessory == null) return;
+        accessories.add(accessory);
+        rebuildAccessoriesList();
+        recalculate();
+    }
+
+    private void rebuildAccessoriesList() {
+        layoutAccessories.removeAllViews();
+        textNoAccessories.setVisibility(accessories.isEmpty() ? View.VISIBLE : View.GONE);
+
+        LayoutInflater inflater = LayoutInflater.from(this);
+        for (int i = 0; i < accessories.size(); i++) {
+            final int index = i;
+            Accessory accessory = accessories.get(i);
+            View row = inflater.inflate(R.layout.item_accessory, layoutAccessories, false);
+            ((TextView) row.findViewById(R.id.textAccessoryName)).setText(accessory.name);
+
+            StringBuilder details = new StringBuilder(String.format(Locale.US, "$%d", accessory.cost));
+            if (accessory.weight > 0) details.append(String.format(Locale.US, " | %.0f lb", accessory.weight));
+            if (accessory.space > 0) details.append(String.format(Locale.US, " | %s sp", formatSpace(accessory.space)));
+            ((TextView) row.findViewById(R.id.textAccessoryDetails)).setText(details.toString());
+
+            TextView description = row.findViewById(R.id.textAccessoryDescription);
+            if (accessory.description == null || accessory.description.isEmpty()) {
+                description.setVisibility(View.GONE);
+            } else {
+                description.setText(accessory.description);
+            }
+
+            row.findViewById(R.id.buttonRemoveAccessory).setOnClickListener(v -> {
+                accessories.remove(index);
+                rebuildAccessoriesList();
+                recalculate();
+            });
+            layoutAccessories.addView(row);
+        }
+    }
+
     private String formatSpace(double space) {
         if (space == Math.floor(space)) {
             return String.valueOf((int) space);
@@ -357,6 +407,7 @@ public class DesignVehicleActivity extends AppCompatActivity {
         input.mountedWeapons = mountedWeapons;
         input.hasBodyArmor = checkBodyArmor.isChecked();
         input.targetingComputer = selectedTargetingComputer();
+        input.accessories = accessories;
 
         RadioGroup radioGroup = findViewById(R.id.radioGroupPowerPlantType);
         input.isElectric = radioGroup.getCheckedRadioButtonId() == R.id.radioElectric;
@@ -441,9 +492,14 @@ public class DesignVehicleActivity extends AppCompatActivity {
             weaponLines.add(line);
         }
 
+        ArrayList<String> accessoryNames = new ArrayList<>();
+        for (Accessory accessory : accessories) {
+            accessoryNames.add(accessory.name);
+        }
+
         VehicleGarage.SAVED_VEHICLES.add(new Vehicle(name, body.name, chassis.name, suspension.name, powerPlantSummary,
                 "", armor.front, armor.back, armor.left, armor.right, armor.top, armor.underbody, tire.dp, weaponLines,
-                checkBodyArmor.isChecked(), selectedTargetingComputer().name,
+                checkBodyArmor.isChecked(), selectedTargetingComputer().name, accessoryNames,
                 latestStats.totalCost, latestStats.totalWeight, latestStats.handlingClass, latestStats.acceleration,
                 latestStats.isUnderpowered, latestStats.topSpeed));
         VehicleGarage.persist(this);

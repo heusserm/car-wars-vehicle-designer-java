@@ -20,6 +20,7 @@ public class Vehicle {
     public final ArrayList<String> weapons;
     public final boolean hasBodyArmor;
     public final String targetingComputer;
+    public final ArrayList<String> accessories;
     public final double totalCost;
     public final double weight;
     public final int handlingClass;
@@ -30,7 +31,7 @@ public class Vehicle {
     public Vehicle(String name, String bodyType, String chassisType, String suspensionType, String powerPlant,
                     String notes, int armorFront, int armorBack, int armorLeft, int armorRight,
                     int armorTop, int armorUnderbody, int tireDp, ArrayList<String> weapons,
-                    boolean hasBodyArmor, String targetingComputer,
+                    boolean hasBodyArmor, String targetingComputer, ArrayList<String> accessories,
                     double totalCost, double weight, int handlingClass, int acceleration,
                     boolean isUnderpowered, double topSpeed) {
         this.name = name;
@@ -49,6 +50,7 @@ public class Vehicle {
         this.weapons = weapons;
         this.hasBodyArmor = hasBodyArmor;
         this.targetingComputer = targetingComputer;
+        this.accessories = accessories;
         this.totalCost = totalCost;
         this.weight = weight;
         this.handlingClass = handlingClass;

@@ -73,6 +73,7 @@ public class VehicleListActivity extends AppCompatActivity {
         intent.putStringArrayListExtra(VehicleDetailActivity.EXTRA_WEAPONS, vehicle.weapons);
         intent.putExtra(VehicleDetailActivity.EXTRA_HAS_BODY_ARMOR, vehicle.hasBodyArmor);
         intent.putExtra(VehicleDetailActivity.EXTRA_TARGETING_COMPUTER, vehicle.targetingComputer);
+        intent.putStringArrayListExtra(VehicleDetailActivity.EXTRA_ACCESSORIES, vehicle.accessories);
         intent.putExtra(VehicleDetailActivity.EXTRA_TOTAL_COST, vehicle.totalCost);
         intent.putExtra(VehicleDetailActivity.EXTRA_WEIGHT, vehicle.weight);
         intent.putExtra(VehicleDetailActivity.EXTRA_HANDLING_CLASS, vehicle.handlingClass);

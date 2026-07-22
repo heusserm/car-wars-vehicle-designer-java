@@ -194,6 +194,33 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical" />
 
+            <TextView style="@style/SectionHeader" android:text="Accessories" />
+
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:gravity="center_vertical">
+                <Spinner android:id="@+id/spinnerAccessory" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" />
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/buttonAddAccessory"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:backgroundTint="@color/primary"
+                    android:text="Add" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/textNoAccessories"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="No accessories added."
+                android:textColor="#808080" />
+
+            <LinearLayout
+                android:id="@+id/layoutAccessories"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" />
+
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

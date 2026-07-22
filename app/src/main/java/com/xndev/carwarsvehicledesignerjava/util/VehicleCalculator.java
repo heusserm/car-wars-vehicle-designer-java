@@ -1,5 +1,6 @@
 package com.xndev.carwarsvehicledesignerjava.util;
 
+import com.xndev.carwarsvehicledesignerjava.model.Accessory;
 import com.xndev.carwarsvehicledesignerjava.model.BodyType;
 import com.xndev.carwarsvehicledesignerjava.model.ChassisType;
 import com.xndev.carwarsvehicledesignerjava.model.ElectricPowerPlant;
@@ -43,6 +44,7 @@ public final class VehicleCalculator {
         public List<MountedWeapon> mountedWeapons;
         public boolean hasBodyArmor;
         public TargetingComputer targetingComputer = TargetingComputer.NONE;
+        public List<Accessory> accessories = java.util.Collections.emptyList();
     }
 
     public static VehicleStats compute(Input in) {
@@ -92,13 +94,23 @@ public final class VehicleCalculator {
         int bodyArmorCostApplied = in.hasBodyArmor ? BODY_ARMOR_COST : 0;
         int driverDp = BASE_DRIVER_DP + (in.hasBodyArmor ? BODY_ARMOR_DP_BONUS : 0);
 
+        double accessoriesCost = 0;
+        double accessoriesWeight = 0;
+        double accessoriesSpace = 0;
+        for (Accessory accessory : in.accessories) {
+            accessoriesCost += accessory.cost;
+            accessoriesWeight += accessory.weight;
+            accessoriesSpace += accessory.space;
+        }
+
         double totalCost = bodyPrice + suspensionCost + powerPlantCost + tiresCost + armorCost
-                + weaponsCost + ammoCost + bodyArmorCostApplied + in.targetingComputer.cost;
+                + weaponsCost + ammoCost + bodyArmorCostApplied + in.targetingComputer.cost + accessoriesCost;
 
         double totalWeight = in.body.weight + powerPlantWeight + tiresWeight + armorWeight
-                + weaponsWeight + ammoWeight + DRIVER_WEIGHT + in.targetingComputer.weight;
+                + weaponsWeight + ammoWeight + DRIVER_WEIGHT + in.targetingComputer.weight + accessoriesWeight;
 
-        double spacesUsed = powerPlantSpacesUsed + weaponsSpace + DRIVER_SPACES + in.targetingComputer.space;
+        double spacesUsed = powerPlantSpacesUsed + weaponsSpace + DRIVER_SPACES
+                + in.targetingComputer.space + accessoriesSpace;
         double spacesAvailable = in.body.spaces - spacesUsed;
 
         int handlingClass = in.suspension.handlingClassFor(in.body.handlingCategory);
