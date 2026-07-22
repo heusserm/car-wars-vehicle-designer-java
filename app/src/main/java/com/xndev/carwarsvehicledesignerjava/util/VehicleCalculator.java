@@ -7,6 +7,7 @@ import com.xndev.carwarsvehicledesignerjava.model.GasEngine;
 import com.xndev.carwarsvehicledesignerjava.model.GasTankType;
 import com.xndev.carwarsvehicledesignerjava.model.MountedWeapon;
 import com.xndev.carwarsvehicledesignerjava.model.SuspensionType;
+import com.xndev.carwarsvehicledesignerjava.model.TargetingComputer;
 import com.xndev.carwarsvehicledesignerjava.model.TireType;
 import com.xndev.carwarsvehicledesignerjava.model.VehicleArmor;
 
@@ -16,8 +17,15 @@ public final class VehicleCalculator {
 
     public static final int DRIVER_WEIGHT = 150;
     public static final int DRIVER_SPACES = 2;
-    public static final int DRIVER_DP = 3;
+    public static final int BASE_DRIVER_DP = 3;
     public static final int TIRE_COUNT = 4;
+
+    /**
+     * Woven plastic-cord body armor: $250, takes 3 hits before it is useless,
+     * effectively doubling the wearer's DP from 3 to 6.
+     */
+    public static final int BODY_ARMOR_COST = 250;
+    public static final int BODY_ARMOR_DP_BONUS = 3;
 
     private VehicleCalculator() {}
 
@@ -33,6 +41,8 @@ public final class VehicleCalculator {
         public TireType tire;
         public VehicleArmor armor;
         public List<MountedWeapon> mountedWeapons;
+        public boolean hasBodyArmor;
+        public TargetingComputer targetingComputer = TargetingComputer.NONE;
     }
 
     public static VehicleStats compute(Input in) {
@@ -79,13 +89,16 @@ public final class VehicleCalculator {
             weaponsSpace += mw.weapon.space;
         }
 
+        int bodyArmorCostApplied = in.hasBodyArmor ? BODY_ARMOR_COST : 0;
+        int driverDp = BASE_DRIVER_DP + (in.hasBodyArmor ? BODY_ARMOR_DP_BONUS : 0);
+
         double totalCost = bodyPrice + suspensionCost + powerPlantCost + tiresCost + armorCost
-                + weaponsCost + ammoCost;
+                + weaponsCost + ammoCost + bodyArmorCostApplied + in.targetingComputer.cost;
 
         double totalWeight = in.body.weight + powerPlantWeight + tiresWeight + armorWeight
-                + weaponsWeight + ammoWeight + DRIVER_WEIGHT;
+                + weaponsWeight + ammoWeight + DRIVER_WEIGHT + in.targetingComputer.weight;
 
-        double spacesUsed = powerPlantSpacesUsed + weaponsSpace + DRIVER_SPACES;
+        double spacesUsed = powerPlantSpacesUsed + weaponsSpace + DRIVER_SPACES + in.targetingComputer.space;
         double spacesAvailable = in.body.spaces - spacesUsed;
 
         int handlingClass = in.suspension.handlingClassFor(in.body.handlingCategory);
@@ -108,6 +121,6 @@ public final class VehicleCalculator {
 
         return new VehicleStats(totalCost, ammoCost, totalWeight, maxLoad, spacesUsed, spacesAvailable,
                 handlingClass, powerFactors, acceleration, topSpeed, isUnderpowered,
-                DRIVER_WEIGHT, DRIVER_SPACES);
+                DRIVER_WEIGHT, DRIVER_SPACES, driverDp);
     }
 }

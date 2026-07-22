@@ -32,6 +32,8 @@ public class VehicleDetailActivity extends AppCompatActivity {
     public static final String EXTRA_ARMOR_UNDERBODY = "extra_armor_underbody";
     public static final String EXTRA_TIRE_DP = "extra_tire_dp";
     public static final String EXTRA_WEAPONS = "extra_weapons";
+    public static final String EXTRA_HAS_BODY_ARMOR = "extra_has_body_armor";
+    public static final String EXTRA_TARGETING_COMPUTER = "extra_targeting_computer";
     public static final String EXTRA_TOTAL_COST = "extra_total_cost";
     public static final String EXTRA_WEIGHT = "extra_weight";
     public static final String EXTRA_HANDLING_CLASS = "extra_handling_class";
@@ -64,6 +66,8 @@ public class VehicleDetailActivity extends AppCompatActivity {
         int armorUnderbody = getIntent().getIntExtra(EXTRA_ARMOR_UNDERBODY, 0);
         int tireDp = getIntent().getIntExtra(EXTRA_TIRE_DP, 0);
         ArrayList<String> weapons = getIntent().getStringArrayListExtra(EXTRA_WEAPONS);
+        boolean hasBodyArmor = getIntent().getBooleanExtra(EXTRA_HAS_BODY_ARMOR, false);
+        String targetingComputer = getIntent().getStringExtra(EXTRA_TARGETING_COMPUTER);
         double totalCost = getIntent().getDoubleExtra(EXTRA_TOTAL_COST, 0);
         double weight = getIntent().getDoubleExtra(EXTRA_WEIGHT, 0);
         int handlingClass = getIntent().getIntExtra(EXTRA_HANDLING_CLASS, 0);
@@ -92,8 +96,11 @@ public class VehicleDetailActivity extends AppCompatActivity {
         ((TextView) findViewById(R.id.textArmorTop)).setText(String.format(Locale.US, "Top: %d DP", armorTop));
         ((TextView) findViewById(R.id.textArmorUnderbody)).setText(String.format(Locale.US, "Under: %d DP", armorUnderbody));
         ((TextView) findViewById(R.id.textTires)).setText(String.format(Locale.US, "Tires: %d DP each", tireDp));
-        ((TextView) findViewById(R.id.textDriver)).setText(String.format(Locale.US, "Driver: %d lb, %d DP",
-                VehicleCalculator.DRIVER_WEIGHT, VehicleCalculator.DRIVER_DP));
+        int driverDp = VehicleCalculator.BASE_DRIVER_DP + (hasBodyArmor ? VehicleCalculator.BODY_ARMOR_DP_BONUS : 0);
+        ((TextView) findViewById(R.id.textDriver)).setText(String.format(Locale.US, "Driver: %d lb, %d DP%s",
+                VehicleCalculator.DRIVER_WEIGHT, driverDp, hasBodyArmor ? " (body armor)" : ""));
+        ((TextView) findViewById(R.id.textTargeting)).setText(String.format(Locale.US, "Targeting: %s",
+                targetingComputer == null ? "None" : targetingComputer));
 
         String weaponsText = (weapons == null || weapons.isEmpty())
                 ? "No weapons mounted."

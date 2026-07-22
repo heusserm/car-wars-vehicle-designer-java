@@ -14,11 +14,12 @@ public class VehicleStats {
     public final boolean isUnderpowered;
     public final int driverWeight;
     public final int driverSpaces;
+    public final int driverDp;
 
     public VehicleStats(double totalCost, double ammoCost, double totalWeight, double maxLoad, double spacesUsed,
                          double spacesAvailable, int handlingClass, int powerFactors,
                          int acceleration, double topSpeed, boolean isUnderpowered,
-                         int driverWeight, int driverSpaces) {
+                         int driverWeight, int driverSpaces, int driverDp) {
         this.totalCost = totalCost;
         this.ammoCost = ammoCost;
         this.totalWeight = totalWeight;
@@ -32,6 +33,7 @@ public class VehicleStats {
         this.isUnderpowered = isUnderpowered;
         this.driverWeight = driverWeight;
         this.driverSpaces = driverSpaces;
+        this.driverDp = driverDp;
     }
 
     public double weightAvailable() {

@@ -83,7 +83,11 @@
             <TextView
                 android:id="@+id/textDriver"
                 style="@style/DetailListRow"
-                android:layout_marginTop="12dp"
+                android:layout_marginTop="12dp" />
+
+            <TextView
+                android:id="@+id/textTargeting"
+                style="@style/DetailListRow"
                 android:layout_marginBottom="16dp" />
 
             <TextView

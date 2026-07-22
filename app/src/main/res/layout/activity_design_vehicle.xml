@@ -178,6 +178,22 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical" />
 
+            <TextView style="@style/SectionHeader" android:text="Driver &amp; Electronics" />
+
+            <CheckBox
+                android:id="@+id/checkBodyArmor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Body Armor ($250 — doubles driver DP from 3 to 6)" />
+
+            <TextView style="@style/FieldLabel" android:text="Targeting Computer" />
+
+            <RadioGroup
+                android:id="@+id/radioGroupTargetingComputer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" />
+
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

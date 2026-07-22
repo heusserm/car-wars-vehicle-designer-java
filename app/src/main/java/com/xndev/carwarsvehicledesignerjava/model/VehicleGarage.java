@@ -53,6 +53,8 @@ public final class VehicleGarage {
                         obj.getInt("armorUnderbody"),
                         obj.getInt("tireDp"),
                         weapons,
+                        obj.optBoolean("hasBodyArmor", false),
+                        obj.optString("targetingComputer", "None"),
                         obj.getDouble("totalCost"),
                         obj.getDouble("weight"),
                         obj.getInt("handlingClass"),
@@ -85,6 +87,8 @@ public final class VehicleGarage {
                 obj.put("armorUnderbody", vehicle.armorUnderbody);
                 obj.put("tireDp", vehicle.tireDp);
                 obj.put("weapons", new JSONArray(vehicle.weapons));
+                obj.put("hasBodyArmor", vehicle.hasBodyArmor);
+                obj.put("targetingComputer", vehicle.targetingComputer);
                 obj.put("totalCost", vehicle.totalCost);
                 obj.put("weight", vehicle.weight);
                 obj.put("handlingClass", vehicle.handlingClass);
