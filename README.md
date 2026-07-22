@@ -2,10 +2,10 @@
 
 A native Android companion app for designing vehicles for **Car Wars**
 (Steve Jackson Games), built in Java with Android Studio/Gradle. It walks
-through the vehicle construction rules from the *Car Wars Compendium* —
-body, chassis, suspension, power plant, tires, armor and weapons — and
-shows live totals for cost, weight, available space and performance as
-you build.
+through the vehicle construction rules from the *Car Wars Compendium, 2nd
+Edition* and earlier editions — body, chassis, suspension, power plant,
+tires, armor and weapons — and shows live totals for cost, weight,
+available space and performance as you build.
 
 This is the native Android counterpart to the cross-platform Flutter
 version of the same app; both implement the same construction rules and
@@ -115,6 +115,11 @@ app/src/main/res/
   layout/     Activity and list-item layouts
   values/     Styles, colors, strings
 ```
+
+## Development
+
+Built by Matt Heusser with assistance from [Claude Code](https://claude.com/claude-code)
+(Anthropic).
 
 ## License
 
